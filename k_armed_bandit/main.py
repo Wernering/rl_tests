@@ -1,3 +1,6 @@
+# Reinforcement Learning. An Introduction. Page 33
+# K-Armed-Bandit
+
 from k_armed_bandit import KBanditProblem
 import matplotlib.pyplot as plt
 import time
