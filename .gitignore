@@ -4,4 +4,5 @@
 *.txt
 *.npy
 */Graficos
-!TD Learning/GridWorld/arrow.png
+!*/*/arrow.png
+!*/*/requirements.txt
