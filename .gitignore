@@ -1,8 +1,8 @@
 .idea/
-*/__pycache__/
+**/__pycache__/
 *.png
 *.txt
 *.npy
 */Graficos
-!*/*/arrow.png
-!*/*/requirements.txt
+!**/arrow.png
+!**/requirements.txt

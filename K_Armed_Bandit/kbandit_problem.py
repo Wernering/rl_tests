@@ -1,4 +1,4 @@
-from k_armed_bandit import StationaryBandit, NonStationaryBandit
+from K_Armed_Bandit import StationaryBandit, NonStationaryBandit
 import pandas as pd
 import random
 import copy

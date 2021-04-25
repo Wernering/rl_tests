@@ -1,7 +1,7 @@
 # Reinforcement Learning. An Introduction. Page 33
 # K-Armed-Bandit
 
-from k_armed_bandit import KBanditProblem
+from K_Armed_Bandit import KBanditProblem
 import matplotlib.pyplot as plt
 import time
 
@@ -28,15 +28,13 @@ def stationary_problem():
     df_z = z.results
 
     plt.plot(df_x.index, df_x['average'], label='E=0.1')
-    plt.plot(df_y.index, df_y['average'])
-    plt.plot(df_z.index, df_z['average'])
+    plt.plot(df_y.index, df_y['average'], label='E=0.01')
+    plt.plot(df_z.index, df_z['average'], label='E=0')
     plt.legend()
 
     print(time.time() - t1)
 
     plt.show()
-
-    df_x.to_excel('resultados_1000_2000_01.xlsx')
 
 
 def nonstationary_problem():
