@@ -3,3 +3,5 @@
 *.png
 *.txt
 *.npy
+*/Graficos
+!TD Learning/GridWorld/arrow.png
