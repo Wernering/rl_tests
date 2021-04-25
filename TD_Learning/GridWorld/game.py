@@ -26,6 +26,7 @@ class PlayerRect:
 
     @staticmethod
     def adapt_position(val, size, margin):
+        """Adapts the position of the player to the pygame Grid dimensions"""
         return val * size + margin
 
 
@@ -207,6 +208,12 @@ class VisualGame:
 
                     if event.key == pygame.K_m:
                         sa_matrix = not sa_matrix
+
+                    if event.key == pygame.K_s:
+                        mods = pygame.key.get_mods()
+                        if mods & pygame.KMOD_CTRL:
+                            pause = True
+                            self.AI.graph(show=False, save=True)
 
             pygame.display.update()
 

@@ -380,13 +380,15 @@ class AIGame:
 
         def image():
             if self.df_cycle_steps.empty:
-                fig, ax = plt.subplot
-                fig.suptitle(f"{self.Agent.evt1}-{self.Agent.alpha}-{self.Agent.epsilon}")
+                fig, ax = plt.subplots(nrows=1, ncols=1)
+                fig.suptitle(
+                    f"{self.Agent.evt1}-{self.Agent.alpha}-{self.Agent.epsilon}-{len(self.Agent.moveset)} movements")
                 self.df_iter_cycle["cycles"].plot(ax=ax)
 
             else:
                 fig, (ax1, ax2) = plt.subplots(nrows=2, ncols=1)
-                fig.suptitle(f"{self.Agent.evt1}-{self.Agent.alpha}-{self.Agent.epsilon}")
+                fig.suptitle(
+                    f"{self.Agent.evt1}-{self.Agent.alpha}-{self.Agent.epsilon}-{len(self.Agent.moveset)} movements")
 
                 self.df_iter_cycle["cycles"].plot(ax=ax1)
                 self.df_cycle_steps["steps"].plot(ax=ax2)
@@ -401,7 +403,7 @@ class AIGame:
 
             image()
             plt.savefig(
-                f"Graficos/{self.Agent.evt1}-alpha_{self.Agent.alpha}-epsilon_{self.Agent.epsilon}-move_card_{len(self.Agent.available_moveset)}.png")
+                f"Graficos/{self.Agent.evt1}-a_{self.Agent.alpha}-e_{self.Agent.epsilon}-move_card_{len(self.Agent.available_moveset)}-turns_{self.total_iterations}.png")
 
     def return_optimal_rout(self):
         return len(self.Agent.optimal_route), self.Agent.optimal_route
@@ -419,8 +421,8 @@ if __name__ == "__main__":
                  ep=ENDING_POINT,
                  agent_alpha=ALPHA,
                  agent_epsilon=EPSILON,
-                 agent_evt1="Q-LEARN",
-                 agent_card_mov=4)
+                 agent_evt1=TD_METHOD,
+                 agent_card_mov=CARDINALITY_MOVESET)
 
     # Loop Game through 8000 steps
     aig.loop(turns=8000)
