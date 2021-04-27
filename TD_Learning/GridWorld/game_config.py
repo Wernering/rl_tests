@@ -8,7 +8,7 @@ STARTING_POINT = (3, 0)  # (row , column) Starting from 0
 ENDING_POINT = (3, 7)  # (row, column) starting from 0
 
 # Agent configs
-CARDINALITY_MOVESET = 9  # 4, 8, 9
+CARDINALITY_MOVESET = 4  # 4, 8, 9
 ALPHA = 0.5
 EPSILON = 0.1
 TD_METHOD = "SARSA"  # SARSA, EX-SARSA, Q-LEARN
@@ -44,6 +44,7 @@ GREEN = (0, 102, 0)
 ORANGE = (244, 153, 51)
 
 RED = (255, 0, 0)
+BLUE = (7, 17, 134)
 
 MOVESET_POSITION = {
     0: "midtop",

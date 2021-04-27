@@ -213,8 +213,8 @@ class Agent(Player):
         self.sa_matrix[id_move_t, row_t, col_t] += self.alpha * (
                 reward_t1 + expected_value_t1 - self.sa_matrix[id_move_t, row_t, col_t])
 
-    def update_current_route(self, id_mov, y, x):
-        self.current_route.append((id_mov, [y, x]))
+    def update_current_route(self, y, x, id_mov):
+        self.current_route.append(([y, x], id_mov))
 
     def reset_current_route(self):
         self.current_route = []
@@ -285,6 +285,9 @@ class AIGame:
             return 0
         return -1
 
+    def return_optimal_route_steps(self):
+        return max(len(self.Agent.optimal_route) - 1, 0)
+
     def add_cycle(self):
         self.total_cycles += 1
 
@@ -337,14 +340,16 @@ class AIGame:
         self.Agent.update_sa_matrix(id_move_t=id_mov, row_t=self.Agent.cy, col_t=self.Agent.cx, reward_t1=reward,
                                     expected_value_t1=expected_value_t1)
 
+        # Append the state - accion to the current route
+        self.Agent.update_current_route(self.Agent.cy, self.Agent.cx, id_mov)
+
         # set new position of player
         self.Agent.set_position(y_t1, x_t1)
 
-        # Append the action - state to the current route
-        self.Agent.update_current_route(id_mov, y_t1, x_t1)
-
         # Check result
         if self.check_victory():
+
+            self.Agent.update_current_route(self.Agent.cy, self.Agent.cx, "*")
 
             if not ui:
                 # if ui, the update to starting position is made afterwards, in the Game Loop

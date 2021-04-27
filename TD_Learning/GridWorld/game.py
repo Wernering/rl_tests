@@ -84,6 +84,13 @@ class VisualGame:
         return rect
 
     def draw_grid(self, wm=False, sa_matrix=False):
+        """
+        Draw the grid of the simulation.
+
+        :param wm:
+        :param sa_matrix:
+        :return:
+        """
         for x in range(self.gw_cols + 1):
             for y in range(self.gw_rows + 1):
                 rect = self.draw_rectangle(x, y, BLACK, 1)
@@ -118,6 +125,15 @@ class VisualGame:
                         pos_text.center = rect.center
                         self.screen.blit(text, pos_text)
 
+    def draw_best_route(self):
+        if self.AI.Agent.optimal_route:
+            list_points = [[x * self.xblocksize + int(self.xblocksize / 2) + BORDER,
+                            y * self.yblocksize + int(self.yblocksize / 2) + BORDER]
+                           for [y, x], _ in self.AI.Agent.optimal_route]
+            for coord in list_points:
+                pygame.draw.circle(self.screen, BLUE, coord, 3)
+            pygame.draw.lines(self.screen, BLUE, False, list_points, 3)
+
     def draw_goal(self, line_size):
         self.draw_rectangle(self.AI.ep[1], self.AI.ep[0], ORANGE, line_size)
 
@@ -128,7 +144,7 @@ class VisualGame:
     def game_info(self):
         text1 = self.font1.render(f"Cycle: {self.AI.total_cycles}", True, BLACK)
         text2 = self.font1.render(f"Cycle_step: {self.AI.cycle_iterations}", True, BLACK)
-        text3 = self.font1.render(f"Best_route_steps: {len(self.AI.Agent.optimal_route)}", True, BLACK)
+        text3 = self.font1.render(f"Best_route_steps: {self.AI.return_optimal_route_steps()}", True, BLACK)
         text4 = self.font1.render(f"Total_steps: {self.AI.total_iterations}", True, BLACK)
 
         text1_rect = text1.get_rect()
@@ -136,13 +152,13 @@ class VisualGame:
         text3_rect = text3.get_rect()
         text4_rect = text4.get_rect()
 
-        text_separation = int((self.screen.get_width() - 2*BORDER -
-                              (text1.get_width() + text2.get_width() + text3.get_width() + text4.get_width())) / 4)
+        text_separation = int((self.screen.get_width() - 2 * BORDER -
+                               (text1.get_width() + text2.get_width() + text3.get_width() + text4.get_width())) / 4)
 
-        text1_rect.topleft = (BORDER, 840)
-        text2_rect.topleft = (text1_rect.topright[0] + text_separation, 840)
-        text3_rect.topleft = (text2_rect.topright[0] + text_separation, 840)
-        text4_rect.topleft = (text3_rect.topright[0] + text_separation, 840)
+        text1_rect.topleft = (BORDER, GRID_HEIGHT + 3 * BORDER)
+        text2_rect.topleft = (text1_rect.topright[0] + text_separation, GRID_HEIGHT + 3 * BORDER)
+        text3_rect.topleft = (text2_rect.topright[0] + text_separation, GRID_HEIGHT + 3 * BORDER)
+        text4_rect.topleft = (text3_rect.topright[0] + text_separation, GRID_HEIGHT + 3 * BORDER)
 
         self.screen.blit(text1, text1_rect)
         self.screen.blit(text2, text2_rect)
@@ -152,10 +168,11 @@ class VisualGame:
     def loop(self):
 
         pause = True
-        fps = [4, 10, 20, 60, 120, 240]
+        fps = [2, 4, 10, 20, 60, 120, 240]
         current_fps = len(fps) - 1
         show_wm = False
         sa_matrix = True
+        best_route = False
 
         while True:
 
@@ -169,6 +186,9 @@ class VisualGame:
             self.draw_goal(0)
             self.draw_player()
             self.draw_grid(wm=show_wm, sa_matrix=sa_matrix)
+
+            if best_route:
+                self.draw_best_route()
 
             self.game_info()
 
@@ -198,10 +218,10 @@ class VisualGame:
                         current_fps = max(current_fps - 1, 0)
 
                     if event.key == pygame.K_g:
-                        self.AI.Agent.update_epsilon(0)
-
-                    if event.key == pygame.K_n:
-                        self.AI.Agent.update_epsilon(0.1)
+                        if self.AI.Agent.epsilon == EPSILON:
+                            self.AI.Agent.update_epsilon(0)
+                        else:
+                            self.AI.Agent.update_epsilon(EPSILON)
 
                     if event.key == pygame.K_w:
                         show_wm = not show_wm
@@ -214,6 +234,9 @@ class VisualGame:
                         if mods & pygame.KMOD_CTRL:
                             pause = True
                             self.AI.graph(show=False, save=True)
+
+                    if event.key == pygame.K_t:
+                        best_route = not best_route
 
             pygame.display.update()
 
