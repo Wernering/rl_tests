@@ -1,3 +1,5 @@
+import platform
+
 # Values considered as a matrix starting in (1,1).
 # The transformation to numpy position is done inside the code
 
@@ -30,5 +32,11 @@ RND_SEED = 2.918
 PLANNING_STEPS = 50
 EPISODES = 50
 
-PATH = ".\Tabular_Methods\dyna_maze"
-GRAPH_PATH = f"{PATH}\graphs"
+PATH = "./Tabular_Methods/dyna_maze"
+GRAPH_PATH = f"{PATH}/graphs"
+LOG_PATH = f"{PATH}/info.log"
+
+if platform.system() == "Windows":
+    PATH = ".\\Tabular_Methods\\dyna_maze"
+    GRAPH_PATH = f"{PATH}\\graphs"
+    LOG_PATH = f"{PATH}\\info.log"

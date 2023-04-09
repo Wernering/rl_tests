@@ -34,7 +34,9 @@ class Game:
             f"Starting Position: {get_value_as_matrix(self.start_position)}. Ending Position: {get_value_as_matrix(self.end_position)}"
         )
 
-    def step(self, action: int) -> bool:
+    def step(self, action: int) -> None:
+        new_pos = self.player.current_position
+
         if action == 0:
             probe_position = self.player.current_position + [-1, 0]
             logger.debug(
@@ -82,7 +84,7 @@ class Game:
             return True
         return False
 
-    def reward(self) -> float:
+    def reward(self) -> int:
         if self.win():
             return self.win_reward
         return self.no_win_reward
@@ -90,7 +92,7 @@ class Game:
     def start(self) -> None:
         self.player.update_position(self.start_position)
 
-    def get_player_current_position(self) -> tuple:
+    def get_player_current_position(self) -> np.ndarray:
         return self.player.current_position
 
     def print_current_situation(self) -> str:

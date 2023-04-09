@@ -9,7 +9,7 @@ from classes.game import Game
 logger = logging.getLogger(LOG_NAME)
 
 
-def episode(agent: Agent, game: Game) -> int:
+def episode(agent: Agent, game: Game) -> tuple[Agent, int]:
     game.start()
     step = 0
     while not game.win():
@@ -31,13 +31,13 @@ def episode(agent: Agent, game: Game) -> int:
         # Get step's end-State S'
         state_s1 = game.get_player_current_position()
 
-        logger.debug(
-            f"Step :{step}. Agent's Start Position: {get_value_as_matrix(state_s)}. Action taken: {action}. Agent's End position: {get_value_as_matrix(state_s1)}. Reward: {reward}. Expected value: {agent.expected_value[action, *state_s]}"
-        )
-
         # Transform states to tuple
         state_s1 = tuple(state_s1)
         state_s = tuple(state_s)
+
+        logger.debug(
+            f"Step :{step}. Agent's Start Position: {get_value_as_matrix(state_s)}. Action taken: {action}. Agent's End position: {get_value_as_matrix(state_s1)}. Reward: {reward}. Expected value: {agent.expected_value[action, *state_s]}"
+        )
 
         # Update expected value matrix
         agent.update_expected_value(

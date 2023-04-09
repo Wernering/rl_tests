@@ -1,4 +1,5 @@
 import os
+import platform
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6,7 +7,9 @@ import matplotlib.pyplot as plt
 import config.config as config
 
 
-def get_value_as_matrix(value: np.array) -> np.array:
+def get_value_as_matrix(value: tuple | np.ndarray) -> np.ndarray:
+    if isinstance(value, tuple):
+        value = np.array(*value)
     return value + [1, 1]
 
 
@@ -32,6 +35,10 @@ def graph(
     if not os.path.isdir(config.GRAPH_PATH):
         os.mkdir(config.GRAPH_PATH)
 
+    path = f"{config.GRAPH_PATH}/"
+    if platform.system() == "Windows":
+        path = f"{config.GRAPH_PATH}\\"
+
     plt.savefig(
-        f"{config.GRAPH_PATH}/dynaMaze_rngSeed_{seed}_alpha_{alpha}_gamma_{gamma}_epsilon_{epsilon}.png"
+        f"{path}dynaMaze_rngSeed_{seed}_alpha_{alpha}_gamma_{gamma}_epsilon_{epsilon}.png"
     )

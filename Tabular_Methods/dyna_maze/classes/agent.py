@@ -19,7 +19,8 @@ class Agent:
         self.expected_value = np.zeros([movements, rows, columns])
         self.model: dict[tuple[int, int], dict[int, tuple]] = {}
 
-    def take_action(self, state_s: tuple) -> int:
+    def take_action(self, state_s: np.ndarray) -> int:
+        state_s = tuple(state_s)
         if random() <= self.epsilon:
             return choice(range(0, self._movements))
         evaluations = self.expected_value[:, *state_s]

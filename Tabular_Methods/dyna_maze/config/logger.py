@@ -1,5 +1,5 @@
 from pydantic import BaseSettings
-from config.config import PATH
+from config.config import LOG_PATH
 
 LOG_NAME = "logger"
 LOGGER_LEVEL = "INFO"
@@ -26,7 +26,7 @@ class LoggerConfig(BaseSettings):
             "class": "logging.handlers.RotatingFileHandler",
             "formatter": "std",
             "level": "INFO",
-            "filename": f"{PATH}\info.log",
+            "filename": LOG_PATH,
             "mode": "a",
             "maxBytes": 1048576,
             "backupCount": 10,
