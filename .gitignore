@@ -8,3 +8,4 @@
 *.log
 !**/arrow.png
 !**/requirements.txt
+.vscode
