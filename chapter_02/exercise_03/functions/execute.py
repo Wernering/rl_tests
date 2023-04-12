@@ -14,10 +14,15 @@ def execute(
     episodes: int,
     cycles: int,
     initial_guess: float = 0,
+    alpha: float = 0.5,
 ) -> dict:
     problems = []
 
-    base = KBanditProblem(k=k, initial_guess=initial_guess)
+    base = KBanditProblem(
+        k=k,
+        initial_guess=initial_guess,
+        alpha=alpha,
+    )
 
     for e in epsilons:
         p = base.copy()

@@ -32,7 +32,9 @@ def average_result(result: dict[int, list]) -> list:
     return [mean(x for x in t) for t in zip(*list(result.values()))]
 
 
-def graph(cycle_results: dict[int, list], episodes: int, cycles: int) -> None:
+def graph(
+    cycle_results: dict[int, list], episodes: int, cycles: int, alpha: float
+) -> None:
     _, ax = plt.subplots(nrows=1, ncols=1)
     ax.set_title("K-Armed Bandit")
     ax.set_xlabel("Episodes")
@@ -48,5 +50,5 @@ def graph(cycle_results: dict[int, list], episodes: int, cycles: int) -> None:
 
     logger.info(f"Generating Image in {config.GRAPH_PATH}")
     plt.savefig(
-        f"{config.GRAPH_PATH}k_armed_bandit_cycles_{cycles}_episodes_{episodes}.png"
+        f"{config.GRAPH_PATH}k_armed_bandit_cycles_{cycles}_episodes_{episodes}_alpha_{alpha}.png"
     )

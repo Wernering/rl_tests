@@ -1,4 +1,4 @@
-from classes.bandit import StationaryBandit
+from classes.bandit import NonStationaryBandit
 import random
 import copy
 
@@ -9,13 +9,14 @@ class KBanditProblem:
         k: int,
         epsilon: float = 0.0,
         initial_guess: float = 0.0,
+        alpha=0.5,
     ):
         self.epsilon = epsilon
         self.initial_value = initial_guess
 
         self.bandits = {}
         for i in range(k):
-            self.bandits[i] = StationaryBandit(initial_guess)
+            self.bandits[i] = NonStationaryBandit(alpha, initial_guess)
 
         self.estimates = self.get_all_estimates()
         self.results = []
@@ -23,7 +24,7 @@ class KBanditProblem:
     def get_all_estimates(self) -> dict:
         return {x: self.bandits[x].get_Qa() for x in self.bandits.keys()}
 
-    def select_bandit(self) -> StationaryBandit:
+    def select_bandit(self) -> NonStationaryBandit:
         if random.random() < self.epsilon:
             return random.choice(list(self.bandits.keys()))
 
@@ -42,6 +43,8 @@ class KBanditProblem:
         real_reward = self.bandits[bandit].selected()
         self.estimates[bandit] = self.bandits[bandit].get_Qa()
         self.save_reward_iteration(real_reward)
+
+        self.recalculate_nonstationary_q_star()
 
     def recalculate_nonstationary_q_star(self):
         """
