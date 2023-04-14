@@ -1,3 +1,6 @@
+# Reinforcement Learning. An Introduction. Page 82
+# Jack's Car Rental (Non-Lineal)
+
 import logging
 import datetime as dt
 from logging.config import dictConfig
