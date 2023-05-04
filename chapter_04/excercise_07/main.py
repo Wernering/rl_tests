@@ -53,6 +53,6 @@ problem = JacksRental(
 with timer("Complete Exercise"):
     solution = synchronous_solve(problem, theta_update=theta_division)
 
-id = dt.datetime.now()
+id = dt.date.today()
 graph_state_value(solution, id)
 graph_policy_value(solution, id)

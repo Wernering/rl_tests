@@ -32,11 +32,11 @@ RND_SEED = 2.918
 PLANNING_STEPS = 50
 EPISODES = 50
 
-PATH = "./tabular_methods/dyna_maze"
+PATH = "./chapter_08/example_01"
 GRAPH_PATH = f"{PATH}/graphs"
 LOG_PATH = f"{PATH}/info.log"
 
 if platform.system() == "Windows":
-    PATH = ".\\tabular_methods\\dyna_maze"
+    PATH = ".\\chapter_08\\example_01"
     GRAPH_PATH = f"{PATH}\\graphs"
     LOG_PATH = f"{PATH}\\info.log"

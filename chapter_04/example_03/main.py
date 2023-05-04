@@ -20,6 +20,6 @@ problem = GamblersProblem(states=config.STATES, ph=head_probability)
 with timer("Whole Problem"):
     solution = execute(problem, theta=theta)
 
-id = dt.datetime.now()
+id = dt.date.today()
 graph_state_value(solution, id, theta)
 graph_policy_value(solution, id, theta)
