@@ -1,0 +1,49 @@
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core"]
+
+[tool.autoflake]
+expand-star-imports = true
+ignore-init-module-imports = true
+in-place = true
+recursive = true
+remove-all-unused-imports = true
+remove-unused-variables = true
+
+[tool.black]
+exclude = ".git/,.venv/,.vscode/,logs/,__pycache__,*.md,Dockerfile"
+line-length = 120
+preview = true
+target-version = ["py310", "py311"]
+
+[tool.isort]
+extend_skip = [".md"]
+import_heading_firstparty = "Project"
+import_heading_localfolder = "Local"
+import_heading_stdlib = "Standard Library"
+import_heading_thirdparty = "External"
+line_length = 120
+lines_after_imports = 2
+multi_line_output = 3
+profile = "black"
+skip = [".git/", ".venv/", ".vscode/", "logs/", "__pycache__", "Dockerfile"]
+
+[tool.poetry]
+authors = ["Christofer Werner <werner.christofer@gmail.com>"]
+description = "Repository made to replicate results of Sutton and Barto's Reinforcement Learning Book"
+name = "rl-tests"
+packages = [{include = "rl_tests"}]
+readme = "README.md"
+version = "0.1.0"
+
+[tool.poetry.dependencies]
+matplotlib = "^3.8.2"
+numpy = "^1.26.2"
+python = "^3.11"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.6.0"
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"

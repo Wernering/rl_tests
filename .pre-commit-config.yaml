@@ -1,0 +1,50 @@
+# Pre-commit hooks
+repos:
+  - repo: https://github.com/python-poetry/poetry
+    rev: 1.6.1
+    hooks:
+      - id: poetry-check
+      - id: poetry-lock
+
+  - repo: local
+    hooks:
+    - id: export-requirements
+      name: Export requeriments.txt
+      language: system
+      pass_filenames: false
+      entry: poetry export -f requirements.txt --without-hashes -o ./src/requirements.txt
+      files: ^(pyproject.toml|poetry.lock)$
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  - repo: https://github.com/dhruvmanila/remove-print-statements
+    rev: v0.5.2
+    hooks:
+      - id: remove-print-statements
+
+  - repo: https://github.com/PyCQA/autoflake
+    rev: v2.2.1
+    hooks:
+      - id: autoflake
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        name: isort (python)
+
+  - repo: https://github.com/psf/black
+    rev: 23.7.0
+    hooks:
+      - id: black
+
+  - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+    rev: v2.10.0
+    hooks:
+      - id: pretty-format-toml
+        args:
+          - --autofix
