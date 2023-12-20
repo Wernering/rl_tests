@@ -1,54 +1,28 @@
-# Reinforcement Learning. An Introduction. Page 81
-# Jack's Car Rental
+# Reinforcement Learning. An Introduction. Page 84
+# Gambler's Problem
 
 # Standard Library
 import datetime as dt
-import logging
-from logging.config import dictConfig
 
-# External
-from classes.rental import JacksRental
-from config.logger import LOG_NAME, LoggerConfig
-from functions.execute import synchronous_solve
-from functions.utils import graph_policy_value, graph_state_value, timer
+# Project
+from app.utils import ctx_timer
 
-
-dictConfig(LoggerConfig().dict())
-
-logger = logging.getLogger(LOG_NAME)
-
-max_moves = 5
-move_cost = 2
-lease_reward = 10
-
-location_a = {
-    "capacity": 20,
-    "lease_lambda": 3,
-    "return_lambda": 3,
-    "epsilon": 0.001,
-}
-
-location_b = {
-    "capacity": 20,
-    "lease_lambda": 4,
-    "return_lambda": 2,
-    "epsilon": 0.001,
-}
-
-theta_division = 10
-
-problem = JacksRental(
-    max_moves=max_moves,
-    cost=move_cost,
-    reward=lease_reward,
-    location_a=location_a,
-    location_b=location_b,
-)
+# Local
+from .classes.problem import GamblersProblem
+from .config import LOGGER, STATES
+from .functions.execute import execute
+from .functions.utils import graph_policy_value, graph_state_value
 
 
-with timer("Complete Exercise"):
-    solution = synchronous_solve(problem, theta_update=theta_division)
+def play():
+    head_probability = 0.4
+    theta = 0.01
 
-id = dt.date.today()
-graph_state_value(solution, id)
-graph_policy_value(solution, id)
+    problem = GamblersProblem(states=STATES, ph=head_probability)
+
+    with ctx_timer("Whole Problem", logger=LOGGER):
+        solution = execute(problem, theta=theta)
+
+    id = dt.date.today()
+    graph_state_value(solution, id, theta)
+    graph_policy_value(solution, id, theta)

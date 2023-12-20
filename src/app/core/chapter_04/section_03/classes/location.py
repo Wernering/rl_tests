@@ -1,12 +1,8 @@
-# Standard Library
-import logging
-import math
+# Project
+from app.utils.equations import poisson
 
-# External
-from config.logger import LOG_NAME
-
-
-logger = logging.getLogger(LOG_NAME)
+# Local
+from ..config import LOGGER
 
 
 class Location:
@@ -34,14 +30,10 @@ class Location:
 
         # Dictionary f probabilities of renting x cars
         self.lease_probability = self.dictionary_of_probabilities(self.lease_k)
-        logger.info(f"Location {self.name}, lease probability: {self.lease_probability}")
+        LOGGER.info(f"Location {self.name}, lease probability: {self.lease_probability}")
 
         self.return_probability = self.dictionary_of_probabilities(self.return_k)
-        logger.info(f"Location {self.name}, return probability: {self.return_probability}")
-
-    @staticmethod
-    def poisson(k, n):
-        return math.exp(-k) * (k**n) / math.factorial(n)
+        LOGGER.info(f"Location {self.name}, return probability: {self.return_probability}")
 
     def dictionary_of_probabilities(self, k):
         """
@@ -53,7 +45,7 @@ class Location:
         x = 0
 
         while True:
-            prob = self.poisson(k, x)
+            prob = poisson(k, x)
             if all([x > k, prob < self.epsilon]):
                 break
             poisson_dictionary[x] = prob

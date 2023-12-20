@@ -1,5 +1,5 @@
-# Reinforcement Learning. An Introduction. Page 82
-# Jack's Car Rental (Non-Lineal)
+# Reinforcement Learning. An Introduction. Page 81
+# Jack's Car Rental
 
 # Standard Library
 import datetime as dt
@@ -35,21 +35,13 @@ def play():
 
     theta_division = 10
 
-    non_lineal = {
-        "parking_cost": 4,
-        "free_cars": 10,
-        "free_a_to_b": 1,
-    }
-
     problem = JacksRental(
         max_moves=max_moves,
         cost=move_cost,
         reward=lease_reward,
         location_a=location_a,
         location_b=location_b,
-        **non_lineal,
     )
-
     with ctx_timer("Complete Exercise", logger=LOGGER):
         solution = synchronous_solve(problem, theta_update=theta_division)
 

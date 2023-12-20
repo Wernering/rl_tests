@@ -2,8 +2,8 @@
 import copy
 import random
 
-# External
-from classes.bandit import StationaryBandit
+# Local
+from .bandit import StationaryBandit
 
 
 class KBanditProblem:

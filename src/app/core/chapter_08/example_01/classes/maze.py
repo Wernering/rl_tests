@@ -1,12 +1,8 @@
-# Standard Library
-import logging
-
 # External
 import numpy as np
-from config.logger import LOG_NAME
 
-
-logger = logging.getLogger(LOG_NAME)
+# Local
+from ..config import LOGGER
 
 
 class Maze:
@@ -16,7 +12,7 @@ class Maze:
         self.walls = walls
 
         self.maze_shape = self.create_shape()
-        logger.info(f"Maze shape created successfully. Shape {self.get_maze_dimension()}")
+        LOGGER.info(f"Maze shape created successfully. Shape {self.get_maze_dimension()}")
 
     def create_shape(self):
         # Maze is created as a numpy array (y, x)
@@ -28,7 +24,7 @@ class Maze:
                 maze[wall_y - 1, wall_x - 1] = 1
 
             else:
-                logger.warning(f"WALL ({wall_y}, {wall_x}) was not able to be positioned. Is going to be ignored")
+                LOGGER.warning(f"WALL ({wall_y}, {wall_x}) was not able to be positioned. Is going to be ignored")
         return maze
 
     def get_maze_dimension(self):

@@ -1,11 +1,15 @@
-# Standard Library
-import os
-import platform
-
 # External
-import config.config as config
 import matplotlib.pyplot as plt
 import numpy as np
+
+# Project
+from app.utils import GRAPH_PATH
+
+# Local
+from ..config import FILE_NAME, LOGGER
+
+
+LOCAL_GRAPH_PATH = GRAPH_PATH.joinpath(FILE_NAME)
 
 
 def get_value_as_matrix(value: tuple | np.ndarray) -> np.ndarray:
@@ -21,7 +25,7 @@ def graph(
     gamma: float,
     epsilon: float,
 ) -> None:
-    fig, ax = plt.subplots(nrows=1, ncols=1)
+    _, ax = plt.subplots(nrows=1, ncols=1)
     ax.set_title("Dyna Maze")
     ax.set_xlabel("Episodes")
     ax.set_ylabel("Steps per pisodes")
@@ -31,11 +35,8 @@ def graph(
 
     ax.legend(loc="upper right")
 
-    if not os.path.isdir(config.GRAPH_PATH):
-        os.mkdir(config.GRAPH_PATH)
+    if not LOCAL_GRAPH_PATH.exists():
+        LOCAL_GRAPH_PATH.mkdir()
 
-    path = f"{config.GRAPH_PATH}/"
-    if platform.system() == "Windows":
-        path = f"{config.GRAPH_PATH}\\"
-
-    plt.savefig(f"{path}dynaMaze_rngSeed_{seed}_alpha_{alpha}_gamma_{gamma}_epsilon_{epsilon}.png")
+    LOGGER.info(f"Saving image in {LOCAL_GRAPH_PATH}")
+    plt.savefig(LOCAL_GRAPH_PATH.joinpath(f"dynaMaze_rngSeed_{seed}_alpha_{alpha}_gamma_{gamma}_epsilon_{epsilon}.png"))

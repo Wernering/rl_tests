@@ -75,5 +75,6 @@ def graph_policy_value(solution: JacksRental, id) -> None:
     ax.set_yticks(y_range)
 
     fig.colorbar(cm, ticks=moves)
+    fig.tight_layout()
 
     save_graph("policy_value", id)

@@ -1,13 +1,9 @@
-# Standard Library
-import logging
-
 # External
 import numpy as np
-from classes.location import Location
-from config.logger import LOG_NAME
 
-
-logger = logging.getLogger(LOG_NAME)
+# Local
+from ..config import LOGGER
+from .location import Location
 
 
 class JacksRental:
@@ -106,7 +102,7 @@ class JacksRental:
                         v_matrix=old_v,
                     )
             delta = max(delta, float(np.amax(abs(self.state_value - old_v))))
-            logger.debug(f"Theta Value: {self.theta}. Max difference: {delta}")
+            LOGGER.debug(f"Theta Value: {self.theta}. Max difference: {delta}")
 
     def policy_improvement(self) -> bool:
         stable = True

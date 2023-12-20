@@ -1,12 +1,8 @@
-# Standard Library
-import logging
-
 # External
 import numpy as np
-from config.logger import LOG_NAME
 
-
-logger = logging.getLogger(LOG_NAME)
+# Local
+from ..config import LOGGER
 
 
 class Player:
@@ -15,7 +11,7 @@ class Player:
 
     def update_position(self, new_position: np.ndarray):
         self.current_position = new_position
-        logger.debug(f"Player's current position: {self.position_as_matrix(self.current_position)}")
+        LOGGER.debug(f"Player's current position: {self.position_as_matrix(self.current_position)}")
 
     def position_as_matrix(self, value: np.ndarray) -> np.ndarray:
         return value + [1, 1]

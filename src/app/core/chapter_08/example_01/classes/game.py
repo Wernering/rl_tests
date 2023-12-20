@@ -1,17 +1,11 @@
-# Standard Library
-import logging
-
 # External
 import numpy as np
-from config.logger import LOG_NAME
-from functions.utils import get_value_as_matrix
 
 # Local
+from ..config import LOGGER
+from ..functions.utils import get_value_as_matrix
 from .maze import Maze
 from .player import Player
-
-
-logger = logging.getLogger(LOG_NAME)
 
 
 class Game:
@@ -34,7 +28,7 @@ class Game:
         self.rows, self.columns = self.maze.get_maze_dimension()
         self.player = Player(start=self.start_position)
 
-        logger.info(
+        LOGGER.info(
             f"Starting Position: {get_value_as_matrix(self.start_position)}. Ending Position:"
             f" {get_value_as_matrix(self.end_position)}"
         )
@@ -44,7 +38,7 @@ class Game:
 
         if action == 0:
             probe_position = self.player.current_position + [-1, 0]
-            logger.debug(f"Action: 'up'. Probe position: {get_value_as_matrix(probe_position)}")
+            LOGGER.debug(f"Action: 'up'. Probe position: {get_value_as_matrix(probe_position)}")
             possible = False
             if probe_position[0] >= 0:
                 possible = self.maze.maze_shape[*probe_position] == 0
@@ -52,7 +46,7 @@ class Game:
 
         elif action == 1:
             probe_position = self.player.current_position + [1, 0]
-            logger.debug(f"Action: 'down'. Probe position: {get_value_as_matrix(probe_position)}")
+            LOGGER.debug(f"Action: 'down'. Probe position: {get_value_as_matrix(probe_position)}")
             possible = False
             if probe_position[0] < (self.rows):
                 possible = self.maze.maze_shape[*probe_position] == 0
@@ -60,7 +54,7 @@ class Game:
 
         elif action == 2:
             probe_position = self.player.current_position + [0, -1]
-            logger.debug(f"Action: 'left'. Probe position: {get_value_as_matrix(probe_position)}")
+            LOGGER.debug(f"Action: 'left'. Probe position: {get_value_as_matrix(probe_position)}")
             possible = False
             if probe_position[1] >= 0:
                 possible = self.maze.maze_shape[*probe_position] == 0
@@ -68,7 +62,7 @@ class Game:
 
         elif action == 3:
             probe_position = self.player.current_position + [0, 1]
-            logger.debug(f"Action: 'right'. Probe position: {get_value_as_matrix(probe_position)}")
+            LOGGER.debug(f"Action: 'right'. Probe position: {get_value_as_matrix(probe_position)}")
             possible = False
             if probe_position[1] < (self.columns):
                 possible = self.maze.maze_shape[*probe_position] == 0

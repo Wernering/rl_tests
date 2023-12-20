@@ -14,7 +14,7 @@ def execute(
     cycles: int,
     initial_guess: float = 0,
 ) -> dict:
-    problems = []
+    problems: list[KBanditProblem] = []
 
     base = KBanditProblem(k=k, initial_guess=initial_guess)
 
@@ -28,6 +28,7 @@ def execute(
         LOGGER.info(f"Executing problem {i}, with epsilon: {problem.get_epsilon()}")
         with ctx_timer("Whole Cycle", logger=LOGGER):
             results = cycle(problem=problem, episode_iterations=episodes, cycle_iterations=cycles)
+        LOGGER.info("Calculating Average return per step over cycles")
         results = average_result(results)
         experiment_result[problem.get_epsilon()] = results
 

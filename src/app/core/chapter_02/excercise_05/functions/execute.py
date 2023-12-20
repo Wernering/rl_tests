@@ -33,6 +33,7 @@ def execute(
         LOGGER.info(f"Executing problem {i}, with epsilon: {problem.get_epsilon()}")
         with ctx_timer("Whole Cycle", logger=LOGGER):
             results = cycle(problem=problem, episode_iterations=episodes, cycle_iterations=cycles)
+        LOGGER.info("Calculating Average return per step over cycles")
         results = average_result(results)
         experiment_result[problem.get_epsilon()] = results
 

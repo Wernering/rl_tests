@@ -1,5 +1,4 @@
-# Standard Library
-import platform
+FILE_NAME = "C08_X01"
 
 
 # Values considered as a matrix starting in (1,1).
@@ -33,12 +32,3 @@ EPSILON = 0.1
 RND_SEED = 2.918
 PLANNING_STEPS = 50
 EPISODES = 50
-
-PATH = "./chapter_08/example_01"
-GRAPH_PATH = f"{PATH}/graphs"
-LOG_PATH = f"{PATH}/info.log"
-
-if platform.system() == "Windows":
-    PATH = ".\\chapter_08\\example_01"
-    GRAPH_PATH = f"{PATH}\\graphs"
-    LOG_PATH = f"{PATH}\\info.log"

@@ -1,16 +1,16 @@
-# Standard Library
-import logging
-import os
-from statistics import mean
-
 # External
-import config.config as config
 import matplotlib.pyplot as plt
-from classes.problem import KBanditProblem
-from config.logger import LOG_NAME
+import numpy as np
+
+# Project
+from app.utils import GRAPH_PATH
+
+# Local
+from ..classes.problem import KBanditProblem
+from ..config import FILE_NAME, LOGGER
 
 
-logger = logging.getLogger(LOG_NAME)
+LOCAL_GRAPH_PATH = GRAPH_PATH.joinpath(FILE_NAME)
 
 
 def episode(problem: KBanditProblem, iterations: int) -> list:
@@ -29,7 +29,8 @@ def cycle(problem: KBanditProblem, episode_iterations: int, cycle_iterations: in
 
 
 def average_result(result: dict[int, list]) -> list:
-    return [mean(x for x in t) for t in zip(*list(result.values()))]
+    arr = np.array(list(result.values()))
+    return np.mean(arr, axis=0)
 
 
 def graph(cycle_results: dict[int, list], episodes: int, cycles: int) -> None:
@@ -43,8 +44,8 @@ def graph(cycle_results: dict[int, list], episodes: int, cycles: int) -> None:
 
     ax.legend(loc="lower right")
 
-    if not os.path.isdir(config.GRAPH_PATH):
-        os.mkdir(config.GRAPH_PATH)
+    if not LOCAL_GRAPH_PATH.exists():
+        LOCAL_GRAPH_PATH.mkdir()
 
-    logger.info(f"Generating Image in {config.GRAPH_PATH}")
-    plt.savefig(f"{config.GRAPH_PATH}k_armed_bandit_cycles_{cycles}_episodes_{episodes}.png")
+    LOGGER.info(f"Generating Image in {LOCAL_GRAPH_PATH}")
+    plt.savefig(LOCAL_GRAPH_PATH.joinpath(f"k_armed_bandit_cycles_{cycles}_episodes_{episodes}.png"))

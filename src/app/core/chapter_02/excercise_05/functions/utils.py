@@ -10,7 +10,7 @@ from ..classes.problem import KBanditProblem
 from ..config import FILE_NAME, LOGGER
 
 
-GRAPH_PATH = GRAPH_PATH.joinpath(FILE_NAME)
+LOCAL_GRAPH_PATH = GRAPH_PATH.joinpath(FILE_NAME)
 
 
 def episode(problem: KBanditProblem, iterations: int) -> list:
@@ -44,8 +44,8 @@ def graph(cycle_results: dict[int, list], episodes: int, cycles: int, alpha: flo
 
     ax.legend(loc="lower right")
 
-    if not GRAPH_PATH.exists():
-        GRAPH_PATH.mkdir()
+    if not LOCAL_GRAPH_PATH.exists():
+        LOCAL_GRAPH_PATH.mkdir()
 
-    LOGGER.info(f"Generating Image in {GRAPH_PATH}")
-    plt.savefig(GRAPH_PATH.joinpath(f"k_armed_bandit_cycles_{cycles}_episodes_{episodes}_alpha_{alpha}.png"))
+    LOGGER.info(f"Generating Image in {LOCAL_GRAPH_PATH}")
+    plt.savefig(LOCAL_GRAPH_PATH.joinpath(f"k_armed_bandit_cycles_{cycles}_episodes_{episodes}_alpha_{alpha}.png"))

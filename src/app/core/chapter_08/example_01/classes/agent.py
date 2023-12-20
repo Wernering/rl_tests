@@ -3,7 +3,9 @@ from random import choice, random
 
 # External
 import numpy as np
-from functions.algorithm import q_learning
+
+# Project
+from app.utils.equations import q_learning
 
 
 class Agent:

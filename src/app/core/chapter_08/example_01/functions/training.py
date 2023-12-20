@@ -1,17 +1,14 @@
 # Standard Library
-import logging
 import random
 
-# External
-from classes.agent import Agent
-from classes.game import Game
-from config.logger import LOG_NAME
+# Project
+from app.utils import wrap_timer
 
 # Local
+from ..classes.agent import Agent
+from ..classes.game import Game
+from ..config import LOGGER
 from .utils import get_value_as_matrix
-
-
-logger = logging.getLogger(LOG_NAME)
 
 
 def episode(agent: Agent, game: Game) -> tuple[Agent, int]:
@@ -40,7 +37,7 @@ def episode(agent: Agent, game: Game) -> tuple[Agent, int]:
         state_s1 = tuple(state_s1)
         state_s = tuple(state_s)
 
-        logger.debug(
+        LOGGER.debug(
             f"Step :{step}. Agent's Start Position: {get_value_as_matrix(state_s)}. Action taken:"
             f" {action}. Agent's End position: {get_value_as_matrix(state_s1)}. Reward: {reward}."
             f" Expected value: {agent.expected_value[action, *state_s]}"
@@ -58,6 +55,7 @@ def episode(agent: Agent, game: Game) -> tuple[Agent, int]:
     return agent, step
 
 
+@wrap_timer("Cycle calculation", logger=LOGGER)
 def cycle(
     rows: int,
     columns: int,
