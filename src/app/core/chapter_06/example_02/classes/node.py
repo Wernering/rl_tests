@@ -1,16 +1,10 @@
-# Standard Library
-import logging
-
-# External
-from config.logger import LOG_NAME
-
-
-logger = logging.getLogger(LOG_NAME)
+# Local
+from ..config import LOGGER
 
 
 class Node:
     def __init__(self, name: str, initial_v: float = 0.5):
-        logger.info(f"Creating Node {name}")
+        LOGGER.info(f"Creating Node {name}")
         self.name = name
         self.initial_v = initial_v
         self.V = initial_v
@@ -30,5 +24,5 @@ class Node:
         self.V = self.V + alpha * (Gt - self.V)
 
     def restart_v(self) -> None:
-        logger.debug(f"Restarting Node {self.name}")
+        LOGGER.debug(f"Restarting Node {self.name}")
         self.V = self.initial_v

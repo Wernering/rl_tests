@@ -3,14 +3,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Project
-from app.utils import GRAPH_PATH
+from app.utils import save_graph
 
 # Local
 from ..classes.problem import KBanditProblem
 from ..config import FILE_NAME, LOGGER
-
-
-LOCAL_GRAPH_PATH = GRAPH_PATH.joinpath(FILE_NAME)
 
 
 def episode(problem: KBanditProblem, iterations: int) -> list:
@@ -34,7 +31,7 @@ def average_result(result: dict[int, list]) -> list:
 
 
 def graph(cycle_results: dict[int, list], episodes: int, cycles: int, alpha: float) -> None:
-    _, ax = plt.subplots(nrows=1, ncols=1)
+    fig, ax = plt.subplots(nrows=1, ncols=1)
     ax.set_title("K-Armed Bandit")
     ax.set_xlabel("Episodes")
     ax.set_ylabel("Average Reward")
@@ -44,8 +41,5 @@ def graph(cycle_results: dict[int, list], episodes: int, cycles: int, alpha: flo
 
     ax.legend(loc="lower right")
 
-    if not LOCAL_GRAPH_PATH.exists():
-        LOCAL_GRAPH_PATH.mkdir()
-
-    LOGGER.info(f"Generating Image in {LOCAL_GRAPH_PATH}")
-    plt.savefig(LOCAL_GRAPH_PATH.joinpath(f"k_armed_bandit_cycles_{cycles}_episodes_{episodes}_alpha_{alpha}.png"))
+    graph_name = f"k_armed_bandit_cycles_{cycles}_episodes_{episodes}_alpha_{alpha}"
+    save_graph(fig=fig, name=graph_name, file_name=FILE_NAME, logger=LOGGER, date_id=False)

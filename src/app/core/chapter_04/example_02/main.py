@@ -2,7 +2,6 @@
 # Gambler's Problem
 
 # Standard Library
-import datetime as dt
 
 # Project
 from app.utils import ctx_timer
@@ -23,6 +22,5 @@ def play():
     with ctx_timer("Whole Problem", logger=LOGGER):
         solution = execute(problem, theta=theta)
 
-    id = dt.date.today()
-    graph_state_value(solution, id, theta)
-    graph_policy_value(solution, id, theta)
+    graph_state_value(solution, theta)
+    graph_policy_value(solution, theta)

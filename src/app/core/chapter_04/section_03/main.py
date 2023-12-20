@@ -2,7 +2,6 @@
 # Jack's Car Rental
 
 # Standard Library
-import datetime as dt
 
 # Project
 from app.utils import ctx_timer
@@ -45,6 +44,5 @@ def play():
     with ctx_timer("Complete Exercise", logger=LOGGER):
         solution = synchronous_solve(problem, theta_update=theta_division)
 
-    id = dt.date.today()
-    graph_state_value(solution, id)
-    graph_policy_value(solution, id)
+    graph_state_value(solution)
+    graph_policy_value(solution)

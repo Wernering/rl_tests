@@ -3,24 +3,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Project
-from app.utils import GRAPH_PATH
+from app.utils import save_graph
 
 # Local
 from ..classes.rental import JacksRental
 from ..config import FILE_NAME, LOGGER
 
 
-LOCAL_GRAPH_PATH = GRAPH_PATH.joinpath(FILE_NAME)
-
-
-def save_graph(name: str, id) -> None:
-    if not LOCAL_GRAPH_PATH.exists():
-        LOCAL_GRAPH_PATH.mkdir()
-    LOGGER.info(f"Saving image '{name}_{id}.png' in {LOCAL_GRAPH_PATH}")
-    plt.savefig(LOCAL_GRAPH_PATH.joinpath(f"{name}_{id}.png"))
-
-
-def graph_state_value(solution: JacksRental, id) -> None:
+def graph_state_value(solution: JacksRental) -> None:
     matrix = solution.state_value
     matrix = np.fliplr(matrix)
 
@@ -51,10 +41,11 @@ def graph_state_value(solution: JacksRental, id) -> None:
         zlabel="Expected value",
     )
 
-    save_graph("state_value", id)
+    graph_name = "state_value"
+    save_graph(fig=fig, name=graph_name, file_name=FILE_NAME, logger=LOGGER)
 
 
-def graph_policy_value(solution: JacksRental, id) -> None:
+def graph_policy_value(solution: JacksRental) -> None:
     matrix = solution.policy_matrix
     moves = list(np.arange(-solution.max_move, solution.max_move + 1, dtype=float))
 
@@ -76,4 +67,5 @@ def graph_policy_value(solution: JacksRental, id) -> None:
 
     fig.colorbar(cm, ticks=moves)
 
-    save_graph("policy_value", id)
+    graph_name = "policy_value"
+    save_graph(fig=fig, name=graph_name, file_name=FILE_NAME, logger=LOGGER)

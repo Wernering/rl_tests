@@ -2,24 +2,14 @@
 import matplotlib.pyplot as plt
 
 # Project
-from app.utils import GRAPH_PATH
+from app.utils import save_graph
 
 # Local
 from ..classes.problem import GamblersProblem
 from ..config import FILE_NAME, LOGGER
 
 
-LOCAL_GRAPH_PATH = GRAPH_PATH.joinpath(FILE_NAME)
-
-
-def save_graph(name: str, id) -> None:
-    if not LOCAL_GRAPH_PATH.exists():
-        LOCAL_GRAPH_PATH.mkdir()
-    LOGGER.info(f"Saving image '{name}_{id}.png' in {LOCAL_GRAPH_PATH}")
-    plt.savefig(LOCAL_GRAPH_PATH.joinpath(f"{name}_{id}.png"))
-
-
-def graph_state_value(solution: GamblersProblem, id, theta: float) -> None:
+def graph_state_value(solution: GamblersProblem, theta: float) -> None:
     matrix = solution.vf[1:-1]
 
     f, ax = plt.subplots(figsize=(9, 6))
@@ -27,10 +17,11 @@ def graph_state_value(solution: GamblersProblem, id, theta: float) -> None:
     ax.set(xlabel="Capital", ylabel="Value Estimates")
     ax.plot(range(1, solution.get_states()), matrix)
 
-    save_graph(f"state_value_ph_{solution.ph}_theta_{theta}", id=id)
+    graph_name = f"state_value_ph_{solution.ph}_theta_{theta}"
+    save_graph(fig=f, name=graph_name, file_name=FILE_NAME, logger=LOGGER)
 
 
-def graph_policy_value(solution: GamblersProblem, id, theta: float) -> None:
+def graph_policy_value(solution: GamblersProblem, theta: float) -> None:
     matrix = solution.policy[1:-1]
 
     f, ax = plt.subplots(figsize=(9, 6))
@@ -38,4 +29,5 @@ def graph_policy_value(solution: GamblersProblem, id, theta: float) -> None:
     ax.set(xlabel="Capital", ylabel="Policy")
     ax.bar(range(1, solution.get_states()), matrix)
 
-    save_graph(f"policy_value_ph_{solution.ph}_theta_{theta}", id=id)
+    graph_name = f"policy_value_ph_{solution.ph}_theta_{theta}"
+    save_graph(fig=f, name=graph_name, file_name=FILE_NAME, logger=LOGGER)

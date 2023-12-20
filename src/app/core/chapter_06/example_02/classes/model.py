@@ -1,15 +1,11 @@
 # Standard Library
-import logging
 import math
 import random
 import statistics
 
-# External
-from classes.node import Node
-from config.logger import LOG_NAME
-
-
-logger = logging.getLogger(LOG_NAME)
+# Local
+from ..config import LOGGER
+from .node import Node
 
 
 class Model:
@@ -58,7 +54,7 @@ class Model:
         pass
 
     def execute_run(self, episodes: int):
-        logger.debug("Starting run")
+        LOGGER.debug("Starting run")
         episode_result = {}
         for episode in range(1, episodes + 1):
             self.execute_episode()
