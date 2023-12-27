@@ -1,9 +1,9 @@
 # Local
 from .distributions import poisson
-from .rl import q_learning
+from .rl import update_q_value
 
 
 __all__ = [
     "poisson",
-    "q_learning",
+    "update_q_value",
 ]

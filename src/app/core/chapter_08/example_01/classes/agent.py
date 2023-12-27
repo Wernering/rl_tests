@@ -5,7 +5,7 @@ from random import choice, random
 import numpy as np
 
 # Project
-from app.utils.equations import q_learning
+from app.utils.equations import update_q_value
 
 
 class Agent:
@@ -45,8 +45,8 @@ class Agent:
 
     def update_expected_value(self, state_s: tuple, action: int, reward: int, state_s1: tuple) -> None:
         exp_value = self.expected_value[action, *state_s]
-        exp_value_s = self.expected_value[:, *state_s1]
-        self.expected_value[action, *state_s] = q_learning(
+        exp_value_s = max(self.expected_value[:, *state_s1])  # <- Q-Learning
+        self.expected_value[action, *state_s] = update_q_value(
             exp_value=exp_value,
             alpha=self.alpha,
             gamma=self.gamma,

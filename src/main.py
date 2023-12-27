@@ -12,4 +12,4 @@ X.. = Example ..
 
 """
 
-CODES.get("C08X01").play()
+CODES.get("C06X07").play()
